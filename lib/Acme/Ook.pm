@@ -2,7 +2,7 @@ package Acme::Ook;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.09';
+$VERSION = '0.10';
 
 my %Ook = (
 	   '.' => {'?'	=> '$Ook++;',
@@ -15,6 +15,21 @@ my %Ook = (
 		   '?'	=> 'while($Ook[$Ook]){',
 		   }
 	    );
+
+sub optimise {
+    # Coalesce sequences of increments or decrements
+    my $prog = $_[1];
+    # print "Before '$prog'\n";
+    foreach my $thing ('$Ook', '$Ook[$Ook]') {
+	foreach my $op ('+', '-') {
+	    my $left = length "$thing$op$op;";
+	    $prog =~ s{((?:\Q$thing$op$op\E;){2,})}
+	      {"$thing$op=".(length ($1)/$left).';'}ges;
+	}
+    }
+    # print "After '$prog'\n";
+    return $prog;
+}
 
 sub _compile {
     chomp $_[0];
@@ -55,7 +70,7 @@ sub compile {
 }
 
 sub Ook {
-    eval &compile;
+    eval $_[0]->optimise(&compile);
 }
 
 sub new {
@@ -117,15 +132,21 @@ be executed before any code supplied in Ook().
 
 =item Ook
 
-The interpreter.  Compiles and executes the Ook! code.  Takes one or
-more arguments, either filenames or IO globs, or no arguments, in which
-case the stdin is read.
+The interpreter.  Compiles, optimises and executes the Ook! code.  Takes
+one or more arguments, either filenames or IO globs, or no arguments, in
+which case the stdin is read.
 
 =item compile
 
 The compiler.  Takes the same arguments as Ook().  Normally not used
 directly but instead via Ook() that also executes the code.  Returns
 the intermediate code.
+
+=item optimise
+
+The optimiser.  Takes the intermediate code from the compiler and
+optimises it slightly. Currently it creates better code for runs of
+repeated increment or decrement.
 
 =back
 
@@ -138,7 +159,7 @@ compiles and executes the Ook.
 
 =head2 Command Line Options
 
-There are two command line options:
+There are three command line options:
 
 =over 4
 
@@ -146,6 +167,10 @@ There are two command line options:
 
 Some example programs look better if an extra newline is shown
 after the execution.
+
+=item -O
+
+Use the optimiser on the intermediate code.
 
 =item -S
 
@@ -169,7 +194,8 @@ it under the same terms as Perl itself.
 
 The sample programs (the ook/ subdirectory) are Copyright (C) 2002
 Lawrence Pit (BlueSorcerer) from http://bluesorcerer.net/esoteric/ook.html
-except for the "ok.t" which is Copyright (C) 2002 Nicholas Clark.
+except for the bananas, coffee, and ok.ook, which are
+Copyright (C) 2002 Nicholas Clark.
 
 =head1 DISCLAIMER
 

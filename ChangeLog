@@ -1,6 +1,14 @@
+Tue Dec 31 02:39:16 2002  Jarkko Hietaniemi  <jhi@lyta.hut.fi>
+
+	* An optimizer for the intermediate language from Nicholas Clark.
+
+	* Two more sample programs from Nicholas Clark: coffee and bananas.
+	
+	* Release 0.10.
+
 Sun Dec 29 02:12:44 2002  Jarkko Hietaniemi  <jhi@iki.fi>
 
-	* A fix from Nicholas Clark so that "Ook? Ook?" is trapped.
+	* A fix from Nicholas Clark so that e.g. "Ook? Ook?" is trapped.
 	
 	* Test the "ok" test.
 	
