@@ -1,3 +1,10 @@
+Sat Dec 28 21:16:09 2002  Jarkko Hietaniemi  <jhi@iki.fi>
+
+	* Changed the language specification URL to point to
+	  the original specification, not to the .Net version.
+	
+	* Release 0.02.
+
 Sat Dec 28 19:56:50 2002  Jarkko Hietaniemi  <jhi@iki.fi>
 
 	* Relase 0.01.

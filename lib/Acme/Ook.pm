@@ -2,7 +2,7 @@ package Acme::Ook;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 my %code = (
 	    '.?'	=> '$i++;',
@@ -51,10 +51,13 @@ or
 
 =head1 DESCRIPTION
 
-As described in http://bluesorcerer.net/esoteric/ook.html,
+As described in http://www.dangermouse.net/esoteric/ook.html
 
-    The syntax only contains one word, namely Ook, but pronounced in
-    different tones and emotions it can have a different effect.
+    Since the word "ook" can convey entire ideas, emotions, and
+    abstract thoughts depending on the nuances of inflection, Ook!
+    has no need of comments. The code itself serves perfectly well to
+    describe in detail what it does and how it does it. Provided you
+    are an orang-utan.
 
 Here's for example how to print a file in reverse order:
 
@@ -63,6 +66,9 @@ Here's for example how to print a file in reverse order:
     Ook? Ook. Ook! Ook! Ook? Ook!
 
 The language specification can be found from the above URL.
+
+Despite the above, the interpreter does understand comments,
+the #-until-end-of-line kind.
 
 =head1 MODULE
 
@@ -124,7 +130,8 @@ Copyright (C) 2002 Jarkko Hietaniemi
 This is free software; you may redistribute it and/or modify
 it under the same terms as Perl itself.
 
-The sample programs are Copyright (C) 2002 Lawrence Pit (BlueSorcerer).
+The sample programs are Copyright (C) 2002 Lawrence Pit (BlueSorcerer),
+from http://bluesorcerer.net/esoteric/ook.html
 
 =head1 DISCLAIMER
 
