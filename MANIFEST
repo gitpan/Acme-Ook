@@ -2,12 +2,12 @@ ChangeLog		New and improved
 MANIFEST		This file
 Makefile.PL		Run me
 README			Did you?
-cat.ook			reads in Ook, prints out Ook
-fib.ook			prints the Fibonacci numbers
-hello.ook		the obligatory Hello World! example
+bin/ook			The Ook interpreter
 lib/Acme/Ook.pm		Acme::Ook module
-ook			The Ook interpreter
-pi.ook			prints the number Pi
-prime.ook		prints prime numbers
-rev.ook			reads in a file (from stdin) and prints it in reverse
+ook/cat.ook		reads in Ook, prints out Ook
+ook/fib.ook		prints the Fibonacci numbers
+ook/hello.ook		the obligatory Hello World! example
+ook/pi.ook		prints the number Pi
+ook/prime.ook		prints prime numbers
+ook/rev.ook		reads in a file (from stdin) and prints it in reverse
 t/hello.t		test greeting

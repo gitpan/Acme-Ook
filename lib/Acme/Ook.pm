@@ -2,24 +2,24 @@ package Acme::Ook;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.0301';
 
-my %code = (
-	    '.?'	=> '$i++;',
-	    '?.'	=> '$i--;',
-	    '..'	=> '$s[$i]++;',
-	    '!!'	=> '$s[$i]--;',
-	    '!.'	=> 'print chr$s[$i];',
-	    '.!'	=> '$s[$i]=read(STDIN,$s[$i],1)?ord$s[$i]:0;',
-	    '!?'	=> 'while($s[$i]){',
+my %Ook = (
+	    '.?'	=> '$Ook++;',
+	    '?.'	=> '$Ook--;',
+	    '..'	=> '$Ook[$Ook]++;',
+	    '!!'	=> '$Ook[$Ook]--;',
+	    '!.'	=> 'print chr$Ook[$Ook];',
+	    '.!'	=> '$Ook[$Ook]=read(STDIN,$Ook[$Ook],1)?ord$Ook[$Ook]:0;',
+	    '!?'	=> 'while($Ook[$Ook]){',
 	    '?!'	=> '}',
 	    );
 
 sub compile {
     my $self = shift;
     my $prog = join "\n", @_;
-    $prog =~ s/(?:Ook(.)\s*Ook(.)\s*|\s*\#(.*)|(\S+))/defined($1)&&defined($2)?$code{$1.$2}:(defined($3)?"#$3\n":die"OOK? $. '$4'\n")/eg;
-    return '{my$i;my@s;local$^W = 0;' . $prog . '}';
+    $prog =~ s/(?:Ook(.)\s*Ook(.)\s*|\s*\#(.*)|(\S+))/defined($1)&&defined($2)?$Ook{$1.$2}:(defined($3)?"#$3\n":die"OOK? $. '$4'\n")/eg;
+    return '{my($Ook,@Ook);local$^W = 0;' . $prog . '}';
 }
 
 sub Ook {
@@ -37,7 +37,7 @@ __END__
 
 =head1 NAME
 
-Acme::Ook - the Ook programming language
+Acme::Ook - the Ook! programming language
 
 =head1 SYNOPSIS
 
@@ -95,9 +95,9 @@ The compiler.
 =head1 INTERPRETER
 
 The interpreter is the frontend to the Acme::Ook module.  It is used
-as one would imagine: given one (or more) Ook input files (or none, in
-which case stdin is expected to contain Ook), the interpreter compiles
-and executes the Ook.
+as one would imagine: given one (or more) Ook! input files (or none,
+in which case stdin is expected to contain Ook!), the interpreter
+compiles and executes the Ook.
 
 =head2 Command Line Options
 
@@ -118,8 +118,16 @@ If you want to see the intermediate code.
 
 =head1 DIAGNOSTICS
 
-If your code doesn't look like proper Ook, the interpreter will
+If your code doesn't look like proper Ook!, the interpreter will
 make its confusion known.
+
+At least Perl 5.6.0 is recommended but not required, but that's
+only because of a bug in Perl 5.00503 that makes the hello.t test
+to moan like this:
+
+	t/hello.............untie attempted while 1 inner references still exist at t/hello.t line 7, <OOK> chunk 26.
+
+The test is fine, Perl 5.00503 is not.
 
 =head1 AUTHOR, COPYRIGHT, LICENSE
 
