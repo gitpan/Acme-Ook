@@ -5,7 +5,7 @@ use vars qw($S $l);
 
 use Acme::Ook;
 my $Ook = Acme::Ook->new;
-my $OOK = $Ook->Ook(@ARGV);
+my $OOK = $Ook->compile(@ARGV);
 
 if ($S) {
     print $OOK;

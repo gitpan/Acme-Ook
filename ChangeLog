@@ -1,10 +1,27 @@
+Sun Dec 29 01:20:23 2002  Jarkko Hietaniemi  <jhi@iki.fi>
+
+	* The -S flag was not working.
+	
+	* The 0.06 had lost once again the error reporting.
+	
+	* Release 0.07.
+
+Sun Dec 29 01:14:17 2002  Jarkko Hietaniemi  <jhi@iki.fi>
+
+	* Nicholas Clark found a way to make the compilation
+	  code more compact.
+	
+	* Nicholas Clark found a way to kludge around the problem
+	  with hello.t in older (pre-5.8.0) Perls.
+	
+	* Do not require 5.6 to kludge around 5.6-introduced problems.
+	
+	* Release 0.06.
+
 Sun Dec 29 00:53:37 2002  Jarkko Hietaniemi  <jhi@iki.fi>
 
 	* Nicholas Clark found a problem where in newer Perls
 	  "Ook! Ook." might start producing Unicode.
-	
-	* Nicholas Clark found a way to kludge around the problem
-	  with hello.t in older (pre-5.8.0) Perls.
 	
 	* Release 0.05.
 
