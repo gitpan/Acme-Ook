@@ -7,6 +7,7 @@ lib/Acme/Ook.pm		Acme::Ook module
 ook/cat.ook		reads in Ook, prints out Ook
 ook/fib.ook		prints the Fibonacci numbers
 ook/hello.ook		the obligatory Hello World! example
+ook/ok.ook		an ok test
 ook/pi.ook		prints the number Pi
 ook/prime.ook		prints prime numbers
 ook/rev.ook		reads in a file (from stdin) and prints it in reverse

@@ -2,7 +2,7 @@ package Acme::Ook;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.07';
+$VERSION = '0.08';
 
 my %Ook = (
 	   '.' => {'?'	=> '$Ook++;',
@@ -166,8 +166,9 @@ Copyright (C) 2002 Jarkko Hietaniemi
 This is free software; you may redistribute it and/or modify
 it under the same terms as Perl itself.
 
-The sample programs are Copyright (C) 2002 Lawrence Pit (BlueSorcerer),
-from http://bluesorcerer.net/esoteric/ook.html
+The sample programs (the ook/ subdirectory) are Copyright (C) 2002
+Lawrence Pit (BlueSorcerer) from http://bluesorcerer.net/esoteric/ook.html
+except for the "ok.t" which is Copyright (C) 2002 Nicholas Clark.
 
 =head1 DISCLAIMER
 
