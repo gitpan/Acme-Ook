@@ -1,9 +1,10 @@
 Sun Dec 29 00:53:37 2002  Jarkko Hietaniemi  <jhi@iki.fi>
 
 	* Nicholas Clark found a problem where in newer Perls
-	  "Ook! Ook." might start producing Unicode.  The easy
-	  way out was to require at least Perl 5.6.0 (and internally
-	  do "use bytes"). 
+	  "Ook! Ook." might start producing Unicode.
+	
+	* Nicholas Clark found a way to kludge around the problem
+	  with hello.t in older (pre-5.8.0) Perls.
 	
 	* Release 0.05.
 

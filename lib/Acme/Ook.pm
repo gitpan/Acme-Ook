@@ -2,22 +2,22 @@ package Acme::Ook;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.05';
-require 5.006;
+$VERSION = '0.06';
 
 my %Ook = (
-	    '.?'	=> '$Ook++;',
-	    '?.'	=> '$Ook--;',
-	    '..'	=> '$Ook[$Ook]++;',
-	    '!!'	=> '$Ook[$Ook]--;',
-	    '!.'	=> 'print chr$Ook[$Ook];',
-	    '.!'	=> '$Ook[$Ook]=read(STDIN,$Ook[$Ook],1)?ord$Ook[$Ook]:0;',
-	    '!?'	=> 'while($Ook[$Ook]){',
-	    '?!'	=> '}',
+	   '.' => {'?'	=> '$Ook++;',
+		   '.'	=> '$Ook[$Ook]++;',
+		   '!'	=> '$Ook[$Ook]=read(STDIN,$Ook[$Ook],1)?ord$Ook[$Ook]:0;'},
+	   '?' => {'.'	=> '$Ook--;',
+		   '!'	=> '}'},
+	   '!' => {'!'	=> '$Ook[$Ook]--;',
+		   '.'	=> 'print chr$Ook[$Ook];',
+		   '?'	=> 'while($Ook[$Ook]){',
+		   }
 	    );
 
 sub _compile {
-    $_[0] =~ s/(?:\s*Ook(.)\s*Ook(.)\s*|\s*\#(.*)|(\S.*))/defined($1)&&defined($2)?$Ook{$1.$2}:(defined($3)?"#$3\n":die"OOK? $_[1]:$_[2] '$4'\n")/eg;
+    $_[0] =~ s/(?:\s*Ook(.)\s*Ook(.)\s*|\s*(\#.*)|\s*(\S.*))/$;=$Ook{$1||0}->{$2||0};$;?$;:(defined($3)?"$3\n":die"OOK? $. '$4'\n")/eg;
     return $_[0];
 }
 
@@ -50,7 +50,7 @@ sub compile {
 	    $prog .= _compile($_, "(stdin)", $.);
 	}
     }
-    return '{my($Ook,@Ook);local$^W = 0;use bytes;' . $prog . '}';
+    return '{my($Ook,@Ook);local$^W = 0;BEGIN{eval{require bytes;bytes::import()}}' . $prog . '}';
 }
 
 sub Ook {
