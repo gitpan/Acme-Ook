@@ -2,7 +2,7 @@ package Acme::Ook;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.08';
+$VERSION = '0.09';
 
 my %Ook = (
 	   '.' => {'?'	=> '$Ook++;',
@@ -17,7 +17,8 @@ my %Ook = (
 	    );
 
 sub _compile {
-    $_[0] =~ s/(?:\s*Ook(.)\s*Ook(.)\s*|\s*(\#.*)|\s*(\S.*))/$;=$Ook{$1||0}->{$2||0};$;?$;:(defined($3)?"$3\n":die"OOK? $_[1]:$_[2] '$4'\n")/eg;
+    chomp $_[0];
+    $_[0] =~ s/\s*(Ook(.)\s*Ook(.)\s*|(\#.*)|\S.*)/$;=$Ook{$2||@@}{$3};$;?$;:defined$4?"$4\n":die"OOK? $_[1]:$_[2] '$1'\n"/eg;
     return $_[0];
 }
 

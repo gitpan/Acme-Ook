@@ -1,3 +1,11 @@
+Sun Dec 29 02:12:44 2002  Jarkko Hietaniemi  <jhi@iki.fi>
+
+	* A fix from Nicholas Clark so that "Ook? Ook?" is trapped.
+	
+	* Test the "ok" test.
+	
+	* Release 0.09.
+
 Sun Dec 29 01:31:59 2002  Jarkko Hietaniemi  <jhi@iki.fi>
 
 	* Add Nicholas Clark's "ok" test.
