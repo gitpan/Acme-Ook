@@ -2,7 +2,8 @@ package Acme::Ook;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.04';
+$VERSION = '0.05';
+require 5.006;
 
 my %Ook = (
 	    '.?'	=> '$Ook++;',
@@ -49,7 +50,7 @@ sub compile {
 	    $prog .= _compile($_, "(stdin)", $.);
 	}
     }
-    return '{my($Ook,@Ook);local$^W = 0;' . $prog . '}';
+    return '{my($Ook,@Ook);local$^W = 0;use bytes;' . $prog . '}';
 }
 
 sub Ook {
@@ -155,14 +156,6 @@ If you want to see the intermediate code.
 
 If your code doesn't look like proper Ook!, the interpreter will
 make its confusion known, similarly if an input file cannot be read.
-
-At least Perl 5.6.0 is recommended but not required, but that's
-only because of a bug in Perl 5.00503 that makes the hello.t test
-to moan like this:
-
-	t/hello.............untie attempted while 1 inner references still exist at t/hello.t line 7, <OOK> chunk 26.
-
-The test is fine, Perl 5.00503 is not.
 
 =head1 AUTHOR, COPYRIGHT, LICENSE
 

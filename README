@@ -1,10 +1,11 @@
 This Perl module implements the Ook programming language
 as described in  http://bluesorcerer.net/esoteric/ook.html
 
-At least Perl 5.6.0 is recommended but not required, but that's
-only because of a bug in Perl 5.00503 that makes the hello.t test
-to moan like this:
+At least Perl 5.6.0 is required for various reasons: one reason is
+a bug in Perl 5.00503 (and assumedly earlier) that makes the hello.t
+test to moan like this:
 
 	t/hello.............untie attempted while 1 inner references still exist at t/hello.t line 7, <OOK> chunk 26.
 
 The test is fine, Perl 5.00503 is not.
+
