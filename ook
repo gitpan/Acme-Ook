@@ -1,0 +1,26 @@
+#!/usr/bin/perl -ws
+
+use strict;
+use vars qw($S $l);
+
+use Acme::Ook;
+my $Ook = Acme::Ook->new;
+
+my $prog;
+
+while (<>) {
+    $prog .= $_;
+}
+
+if ($S) {
+    print $Ook->compile($prog);
+} else {
+    $Ook->Ook($prog);
+}
+
+print "\n" if $l;
+
+exit(0);
+
+
+

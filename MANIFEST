@@ -1,0 +1,13 @@
+ChangeLog		New and improved
+MANIFEST		This file
+Makefile.PL		Run me
+README			Did you?
+cat.ook			reads in Ook, prints out Ook
+fib.ook			prints the Fibonacci numbers
+hello.ook		the obligatory Hello World! example
+lib/Acme/Ook.pm		Acme::Ook module
+ook			The Ook interpreter
+pi.ook			prints the number Pi
+prime.ook		prints prime numbers
+rev.ook			reads in a file (from stdin) and prints it in reverse
+t/hello.t		test greeting
