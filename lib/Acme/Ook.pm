@@ -2,7 +2,7 @@ package Acme::Ook;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.0301';
+$VERSION = '0.04';
 
 my %Ook = (
 	    '.?'	=> '$Ook++;',
@@ -15,10 +15,40 @@ my %Ook = (
 	    '?!'	=> '}',
 	    );
 
+sub _compile {
+    $_[0] =~ s/(?:\s*Ook(.)\s*Ook(.)\s*|\s*\#(.*)|(\S.*))/defined($1)&&defined($2)?$Ook{$1.$2}:(defined($3)?"#$3\n":die"OOK? $_[1]:$_[2] '$4'\n")/eg;
+    return $_[0];
+}
+
 sub compile {
     my $self = shift;
-    my $prog = join "\n", @_;
-    $prog =~ s/(?:Ook(.)\s*Ook(.)\s*|\s*\#(.*)|(\S+))/defined($1)&&defined($2)?$Ook{$1.$2}:(defined($3)?"#$3\n":die"OOK? $. '$4'\n")/eg;
+    my $prog;
+    $prog .= _compile($$self, "(new)", 0) if defined $$self && length $$self;
+    if (@_) {
+	local *OOK;
+	while (@_) {
+	    my $code = shift;
+	    if (ref $code eq 'IO::Handle') {
+		while (<$code>) {
+		    $prog .= _compile($_, $code, $.);
+		}
+		close(OOK);
+	    } else {
+		if (open(OOK, $code)) {
+		    while (<OOK>) {
+			$prog .= _compile($_, $code, $.);
+		    }
+		    close(OOK);
+		} else {
+		    die "OOK! $code: $!\n";
+		}
+	    }
+	}
+    } else {
+	while (<STDIN>) {
+	    $prog .= _compile($_, "(stdin)", $.);
+	}
+    }
     return '{my($Ook,@Ook);local$^W = 0;' . $prog . '}';
 }
 
@@ -28,7 +58,7 @@ sub Ook {
 
 sub new {
     my $class = shift;
-    bless { }, ref $class || $class;
+    bless \$_[0], ref $class || $class;
 }
 
 1;
@@ -80,15 +110,20 @@ The Acme::Ook is the backend for the Ook interpreter.
 
 =item new
 
-The constructor.
+The constructor.  One optional argument, a string of Ook! that will
+be executed before any code supplied in Ook().
 
 =item Ook
 
-The interpreter.
+The interpreter.  Compiles and executes the Ook! code.  Takes one or
+more arguments, either filenames or IO globs, or no arguments, in which
+case the stdin is read.
 
 =item compile
 
-The compiler.
+The compiler.  Takes the same arguments as Ook().  Normally not used
+directly but instead via Ook() that also executes the code.  Returns
+the intermediate code.
 
 =back
 
@@ -119,7 +154,7 @@ If you want to see the intermediate code.
 =head1 DIAGNOSTICS
 
 If your code doesn't look like proper Ook!, the interpreter will
-make its confusion known.
+make its confusion known, similarly if an input file cannot be read.
 
 At least Perl 5.6.0 is recommended but not required, but that's
 only because of a bug in Perl 5.00503 that makes the hello.t test

@@ -5,17 +5,12 @@ use vars qw($S $l);
 
 use Acme::Ook;
 my $Ook = Acme::Ook->new;
-
-my $prog;
-
-while (<>) {
-    $prog .= $_;
-}
+my $OOK = $Ook->Ook(@ARGV);
 
 if ($S) {
-    print $Ook->compile($prog);
+    print $OOK;
 } else {
-    $Ook->Ook($prog);
+    eval $OOK;
 }
 
 print "\n" if $l;

@@ -8,5 +8,3 @@ to moan like this:
 	t/hello.............untie attempted while 1 inner references still exist at t/hello.t line 7, <OOK> chunk 26.
 
 The test is fine, Perl 5.00503 is not.
-
-

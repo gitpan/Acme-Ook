@@ -1,3 +1,11 @@
+Sun Dec 29 00:06:51 2002  Jarkko Hietaniemi  <jhi@iki.fi>
+
+	* Rewrite the new() and Ook() compile interfaces
+	  to accept either strings, Ook! filenames, or
+	  IO globs.
+	
+	* Release 0.04.
+
 Sat Dec 28 22:10:43 2002  Jarkko Hietaniemi  <jhi@iki.fi>
 
 	* Document the Perl 5.00503 silliness in Acme::Ook.
