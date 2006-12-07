@@ -16,3 +16,4 @@ ook/rev.ook		reads in a file (from stdin) and prints it in reverse
 t/hello.t		test greeting
 t/ok.t			test okay
 
+META.yml                                 Module meta-data (added by MakeMaker)

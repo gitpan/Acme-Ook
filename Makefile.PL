@@ -5,6 +5,7 @@ WriteMakefile(
               NAME              => "Acme::Ook",
               EXE_FILES         => [File::Spec->catfile("bin", "ook")],
               VERSION_FROM      => 'lib/Acme/Ook.pm',
+	      PMLIBDIRS         => ['lib'],
               'dist'            => {
                   COMPRESS      => 'gzip -9f',
                   SUFFIX        => 'gz',

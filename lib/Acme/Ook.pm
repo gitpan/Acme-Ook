@@ -2,7 +2,7 @@ package Acme::Ook;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.10';
+$VERSION = '0.11';
 
 my %Ook = (
 	   '.' => {'?'	=> '$Ook++;',
@@ -15,6 +15,12 @@ my %Ook = (
 		   '?'	=> 'while($Ook[$Ook]){',
 		   }
 	    );
+
+BEGIN {
+    no strict 'refs';
+    *{'O?'} = sub { @_ ? $Ook{$_[0]} : %Ook };
+    *{'O!'} = sub { $Ook{$_[0]} = $_[1] };
+}
 
 sub optimise {
     # Coalesce sequences of increments or decrements
@@ -32,28 +38,29 @@ sub optimise {
 }
 
 sub _compile {
+    shift;
     chomp $_[0];
-    $_[0] =~ s/\s*(Ook(.)\s*Ook(.)\s*|(\#.*)|\S.*)/$;=$Ook{$2||@@}{$3};$;?$;:defined$4?"$4\n":die"OOK? $_[1]:$_[2] '$1'\n"/eg;
+    $_[0] =~ s/\s*(Ook(.)\s*Ook(.)\s*|(\#.*)|\S.*)/$;=$Ook{$2||@@}{$3||''};$;?$;:defined$4?"$4\n":die"OOK? $_[1]:$_[2] '$1'\n"/eg;
     return $_[0];
 }
 
 sub compile {
     my $self = shift;
     my $prog;
-    $prog .= _compile($$self, "(new)", 0) if defined $$self && length $$self;
+    $prog .= $self->_compile($$self, "(new)", 0) if defined $$self && length $$self;
     if (@_) {
 	local *OOK;
 	while (@_) {
 	    my $code = shift;
 	    if (ref $code eq 'IO::Handle') {
 		while (<$code>) {
-		    $prog .= _compile($_, $code, $.);
+		    $prog .= $self->_compile($_, $code, $.);
 		}
 		close(OOK);
 	    } else {
 		if (open(OOK, $code)) {
 		    while (<OOK>) {
-			$prog .= _compile($_, $code, $.);
+			$prog .= $self->_compile($_, $code, $.);
 		    }
 		    close(OOK);
 		} else {
@@ -63,7 +70,7 @@ sub compile {
 	}
     } else {
 	while (<STDIN>) {
-	    $prog .= _compile($_, "(stdin)", $.);
+	    $prog .= $self->_compile($_, "(stdin)", $.);
 	}
     }
     return '{my($Ook,@Ook);local$^W = 0;BEGIN{eval{require bytes;bytes::import()}}' . $prog . '}';
@@ -178,6 +185,11 @@ If you want to see the intermediate code.
 
 =back
 
+=head2 BLACK MAGIC
+
+To re-ook the Ook you can use the C<O?> and C<O!> class methods.
+Not that you should.
+
 =head1 DIAGNOSTICS
 
 If your code doesn't look like proper Ook!, the interpreter will
@@ -187,7 +199,7 @@ make its confusion known, similarly if an input file cannot be read.
 
 Jarkko Hietaniemi <jhi@iki.fi>
 
-Copyright (C) 2002 Jarkko Hietaniemi 
+Copyright (C) 2002,2006 Jarkko Hietaniemi 
 
 This is free software; you may redistribute it and/or modify
 it under the same terms as Perl itself.
